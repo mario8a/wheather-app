@@ -1,4 +1,5 @@
 import React from 'react';
+//componentes
 import Location from './Location';
 import WeatherData from './WeatherData';
 

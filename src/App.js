@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import WeatherLocation from './components/WeatherLocation';
+import WeatherLocation from './components/weatherLocation';
 
 function App() {
   return (
