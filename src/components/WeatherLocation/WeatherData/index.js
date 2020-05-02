@@ -4,13 +4,14 @@ import WeatherTemperature from './WeatherTemperature';
 import WeatherExtraInfo from './WeatherExtraInfo';
 //constantes
 import {
-    SUN,
-    CLOUDY
-} from '../constants/weathers'
+    SUN
+} from '../../../constants/weathers'
 //Esto logra un codigo mas estructurado y ver los errores mas claros
+//estilos
+import './styles.css'
 
 const WeatherData = () => (
-    <div>
+    <div className="weatherDataCont">
         <WeatherTemperature 
                 temperature={20} 
                 weatherState={SUN}
