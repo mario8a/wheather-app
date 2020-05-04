@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
+import convert from 'convert-units';
 //componentes
 import Location from './Location';
 import WeatherData from './WeatherData';
 
 import {
     SUN,
-    CLOUDY
 } from '../../constants/weathers'
 
 import './styles.css';
@@ -17,12 +17,11 @@ const data = {
     wind: "10 m/s",
 }
 
-const data2 = {
-    temperature: 5,
-    weatherState: CLOUDY,
-    humidity: 13,
-    wind: "23 m/s",
-}
+const location = 'Mexico,mx';
+const api_key = 'c18ae6a1a610902cfcefe27a257c770c';
+const url_base_weather = 'http://api.openweathermap.org/data/2.5/weather';
+
+const api_weather = `${url_base_weather}?q=${location}&appid=${api_key}`
 
 class weatherLocation extends Component {
 
@@ -36,13 +35,48 @@ class weatherLocation extends Component {
         };
     }
 
+    getTemp = kelvin => {
+        return convert(kelvin).from("K").to("C").toFixed(2);
+    }
+
+    getWeatherState = weather_data => {
+        return SUN
+    }
+
+    getData = weather_data => {
+        const {humidity, temp} = weather_data.main;
+        const {speed} = weather_data.wind;
+        const weatherState = this.getWeatherState(weather_data);
+        const temperature = this.getTemp(temp);
+
+
+        const data = {
+            humidity,
+            temperature,
+            weatherState,
+            wind: `${speed} m/s`,
+        }
+
+        return data
+    }
+
+    
+
     handleUpdateClick = () => {
-        console.log('Actualizado');
-        //Actualiza el state
-        this.setState({
-            city: 'Mexico City',
-            data: data2
+        
+        fetch(api_weather).then(resolve => {
+            return resolve.json();
+        }).then(data => {
+            const newWeather = this.getData(data);
+            console.log(newWeather);
+            //Actualiza el state
+            this.setState({
+                city: 'Mexico City',
+                data: newWeather
+            })
+            
         })
+        
     }
 
     render(){
