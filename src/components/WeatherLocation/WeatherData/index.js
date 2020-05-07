@@ -16,7 +16,7 @@ const WeatherData = ({data: {temperature, weatherState, humidity, wind}}) => (
         <WeatherExtraInfo humidity={humidity} wind={wind}/>
     </div>
 );
-
+//TEMPERATURE ES UN STRING EN LA API
 WeatherData.propTypes = {
     data: PropTypes.shape({
         temperature: PropTypes.number.isRequired,

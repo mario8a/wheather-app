@@ -9,6 +9,13 @@ import {
 } from '../../constants/weathers'
 
 import './styles.css';
+
+const location = 'Mexico';
+const api_key = 'c18ae6a1a610902cfcefe27a257c770c';
+const url_base_weather = 'http://api.openweathermap.org/data/2.5/weather';
+
+const api_weather = `${url_base_weather}?q=${location}&appid=${api_key}`;
+
 // Este componente le envia esta info a weather data (ahora index.js)
 const data = {
     temperature: 6,
@@ -16,12 +23,6 @@ const data = {
     humidity: 10,
     wind: "10 m/s",
 }
-
-const location = 'Mexico,mx';
-const api_key = 'c18ae6a1a610902cfcefe27a257c770c';
-const url_base_weather = 'http://api.openweathermap.org/data/2.5/weather';
-
-const api_weather = `${url_base_weather}?q=${location}&appid=${api_key}`
 
 class weatherLocation extends Component {
 
@@ -36,7 +37,7 @@ class weatherLocation extends Component {
     }
 
     getTemp = kelvin => {
-        return convert(kelvin).from("K").to("C").toFixed(2);
+        return Number(convert(kelvin).from("K").to("C").toFixed(2));
     }
 
     getWeatherState = weather_data => {
@@ -67,8 +68,10 @@ class weatherLocation extends Component {
         fetch(api_weather).then(resolve => {
             return resolve.json();
         }).then(data => {
+            console.log( 'DATA API',data)
             const newWeather = this.getData(data);
-            console.log(newWeather);
+            console.log("APII",newWeather);
+
             //Actualiza el state
             this.setState({
                 city: 'Mexico City',
