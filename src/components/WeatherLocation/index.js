@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import ProtoType from 'prop-types';
+
 import transformWeather from '../../services/transformWeather';
-import {api_weather} from '../../constants/api_url';
+import getUrlWeatherByCity from '../../services/getUrlWeatherByCity';
+// import {api_weather} from '../../constants/api_url';
 //componentes
 import Location from './Location';
 import WeatherData from './WeatherData';
@@ -13,12 +16,12 @@ import './styles.css';
 
 class weatherLocation extends Component {
 
-    constructor() {
-        super();
-
+    constructor(props) {
+        super(props);
+        const {city} = props;
         this.state = {
             // Este es el estado local del componente que ayudara a que el estado se renderize
-            city: 'Buenos aires',
+            city,
             data: null
         };
     }
@@ -34,7 +37,7 @@ class weatherLocation extends Component {
     
 
     handleUpdateClick = () => {
-        
+        const api_weather = getUrlWeatherByCity(this.state.city);
         fetch(api_weather).then(resolve => {
             return resolve.json();
         }).then(data => {
@@ -44,7 +47,6 @@ class weatherLocation extends Component {
 
             //Actualiza el state
             this.setState({
-                city: 'Mexico City',
                 data: newWeather
             })
             
@@ -65,6 +67,9 @@ class weatherLocation extends Component {
         }
 };
 
+weatherLocation.propTypes = {
+    city: ProtoType.string.isRequired
+}
 
 export default weatherLocation;
 
