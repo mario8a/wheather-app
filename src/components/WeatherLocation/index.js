@@ -32,9 +32,15 @@ class weatherLocation extends Component {
             data: data
         };
     }
-
     
+    componentDidMount() {
+        this.handleUpdateClick();
+    }
 
+    componentDidUpdate(prevProps, prevState) {
+        
+    }
+    
     
 
     handleUpdateClick = () => {
