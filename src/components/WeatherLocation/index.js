@@ -4,22 +4,12 @@ import {api_weather} from '../../constants/api_url';
 //componentes
 import Location from './Location';
 import WeatherData from './WeatherData';
+//Material UI
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import {
-    SUN,
-} from '../../constants/weathers'
 
 import './styles.css';
 
-
-
-// Este componente le envia esta info a weather data (ahora index.js)
-const data = {
-    temperature: 6,
-    weatherState: SUN,
-    humidity: 10,
-    wind: "10 m/s",
-}
 
 class weatherLocation extends Component {
 
@@ -29,7 +19,7 @@ class weatherLocation extends Component {
         this.state = {
             // Este es el estado local del componente que ayudara a que el estado se renderize
             city: 'Buenos aires',
-            data: data
+            data: null
         };
     }
     
@@ -67,8 +57,10 @@ class weatherLocation extends Component {
         return(
             <div className="weatherLocCont">
                 <Location city={city} ></Location>
-                <WeatherData data={data}></WeatherData>
-                <button onClick={this.handleUpdateClick}>Actualizar</button>
+                {
+                   data ? <WeatherData data={data}></WeatherData> :
+                   <CircularProgress size={50}/>
+                }
             </div>)
         }
 };
