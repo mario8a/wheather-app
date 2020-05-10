@@ -41,9 +41,9 @@ class weatherLocation extends Component {
         fetch(api_weather).then(resolve => {
             return resolve.json();
         }).then(data => {
-            console.log( 'DATA API',data)
+            // console.log( 'DATA API',data)
             const newWeather = transformWeather(data);
-            console.log("APII",newWeather);
+            // console.log("APII",newWeather);
 
             //Actualiza el state
             this.setState({
