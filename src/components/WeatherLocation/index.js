@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ProtoType from 'prop-types';
+import PropTypes from 'prop-types';
 
 import transformWeather from '../../services/transformWeather';
 import getUrlWeatherByCity from '../../services/getUrlWeatherByCity';
@@ -55,9 +55,10 @@ class weatherLocation extends Component {
     }
 
     render(){
+        const {onWeatherLocationClick} = this.props;
         const {city, data} = this.state;
         return(
-            <div className="weatherLocCont">
+            <div className="weatherLocCont" onClick={onWeatherLocationClick}>
                 <Location city={city} ></Location>
                 {
                    data ? <WeatherData data={data}></WeatherData> :
@@ -68,7 +69,8 @@ class weatherLocation extends Component {
 };
 
 weatherLocation.propTypes = {
-    city: ProtoType.string.isRequired
+    city: PropTypes.string.isRequired,
+    onWeatherLocationClick: PropTypes.func,
 }
 
 export default weatherLocation;
