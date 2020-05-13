@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
 import {Grid, Col, Row} from 'react-flexbox-grid';
+
 import LocationList from './components/LocationList';
+import ForecastExtended from './components/ForecastExtended';
 
 //MaterialUI
 import Paper from '@material-ui/core/Paper';
@@ -19,10 +21,21 @@ const cities  = [
 ];
 
 class App extends Component {
+
+  constructor() {
+    super()
+    
+    this.state = {
+      city: null
+    }
+  }
+
   handleSelectedLocation = city => {
+    this.setState({city});
     console.log(`handleSelectedLocation ${city}` );
   }
   render() {
+    const {city} = this.state;
     return (
       <Grid>
         <Row>
@@ -40,7 +53,13 @@ class App extends Component {
           </Col>
           <Col xs={12} md={6}>
             <Paper elevation={4}>
-             <div className="details">  </div>
+             <div className="details">
+                {
+                  city ? 
+                  <ForecastExtended city={city}/> :
+                    <h1>No se selecciono ciudad</h1> 
+                }
+             </div>
             </Paper>
           </Col>
         </Row>
