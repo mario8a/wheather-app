@@ -32,7 +32,16 @@ class ForecastExtended extends Component {
     }
 
     componentDidMount() {
-        
+        //fetch or axios
+        const url_foreast = `${url}?q=${this.props.city}&appid=${api_key}`;
+
+        fetch(url_foreast).then(
+            data => (data.json())
+        ).then(
+            weather_data => {
+                console.log(weather_data);
+            }
+        )
     }
     
 
