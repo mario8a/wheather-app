@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 //Componentes
 import ForecastItem from './ForecastItem';
+//servicios
+import transformForecast from '../services/transformForecast';
 
 import './style.css';
 
@@ -40,13 +42,15 @@ class ForecastExtended extends Component {
         ).then(
             weather_data => {
                 console.log(weather_data);
+                const forecastData = transformForecast(weather_data);
+                this.setState({forecastData})
             }
         )
     }
     
 
     renderForecastItemDays() {
-        return "Render de items";
+        return <h1>Render de items</h1>
         //return days.map(day => <ForecastItem weekDay={day} hour={10} data={data} />)
     }
     renderProgress = () => {
