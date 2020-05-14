@@ -50,9 +50,14 @@ class ForecastExtended extends Component {
     }
     
 
-    renderForecastItemDays() {
-        return <h1>Render de items</h1>
-        //return days.map(day => <ForecastItem weekDay={day} hour={10} data={data} />)
+    renderForecastItemDays(forecastData) {
+        return forecastData.map(forecast => 
+            (<ForecastItem 
+                    key={`${forecast.weekDay}${forecast.hour}`}
+                    weekDay={forecast.weekDay} 
+                    hour={forecast.hour} 
+                    data={forecast.data} />)
+            )
     }
     renderProgress = () => {
         return <h3>cargando pronostico extendido</h3>
@@ -65,7 +70,7 @@ class ForecastExtended extends Component {
             <div>
                <h2 className="forecastTitle"> Pronóstico extendido para {city} </h2>
                {forecastData ? 
-                    this.renderForecastItemDays():
+                    this.renderForecastItemDays(forecastData):
                     this.renderProgress()}
             </div>
         )
