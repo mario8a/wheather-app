@@ -35,7 +35,19 @@ class ForecastExtended extends Component {
 
     componentDidMount() {
         //fetch or axios
-        const url_foreast = `${url}?q=${this.props.city}&appid=${api_key}`;
+        this.updateCity(this.props.city)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps !== this.props.city) {
+            this.setState({forecastData: null})
+            this.updateCity(nextProps.city);
+        }
+    }
+    
+
+    updateCity = city => {
+        const url_foreast = `${url}?q=${city}&appid=${api_key}`;
 
         fetch(url_foreast).then(
             data => (data.json())
@@ -48,16 +60,15 @@ class ForecastExtended extends Component {
             }
         )
     }
-    
 
     renderForecastItemDays(forecastData) {
-        return forecastData.map(forecast => 
-            (<ForecastItem 
-                    key={`${forecast.weekDay}${forecast.hour}`}
-                    weekDay={forecast.weekDay} 
-                    hour={forecast.hour} 
-                    data={forecast.data} />)
-            )
+        return forecastData.map( forecast => (
+            <ForecastItem 
+                key={`${forecast.weekDay}${forecast.hour}`}
+                weekDay={forecast.weekDay} 
+                hour={forecast.hour} 
+                data={forecast.data}>
+            </ForecastItem>));
     }
     renderProgress = () => {
         return <h3>cargando pronostico extendido</h3>
@@ -79,6 +90,7 @@ class ForecastExtended extends Component {
 
 ForecastExtended.propTypes = {
     city: PropTypes.string.isRequired,
+    
 }
 
 export default ForecastExtended;
