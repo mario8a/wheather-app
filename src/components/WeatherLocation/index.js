@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import transformWeather from '../../services/transformWeather';
-import getUrlWeatherByCity from '../../services/getUrlWeatherByCity';
+// import transformWeather from '../../services/transformWeather';
+// import getUrlWeatherByCity from '../../services/getUrlWeatherByCity';
 // import {api_weather} from '../../constants/api_url';
+
 //componentes
 import Location from './Location';
 import WeatherData from './WeatherData';
@@ -14,63 +15,54 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import './styles.css';
 
 
-class weatherLocation extends Component {
+const weatherLocation =  ({onWeatherLocationClick, city, data}) => ( 
 
-    constructor(props) {
-        super(props);
-        const {city} = props;
-        this.state = {
-            // Este es el estado local del componente que ayudara a que el estado se renderize
-            city,
-            data: null
-        };
-    }
+    // constructor(props) {
+    //     super(props);
+    //     const {city} = props;
+    //     this.state = {
+    //         // Este es el estado local del componente que ayudara a que el estado se renderize
+    //         city,
+    //         data: null
+    //     };
+    // }
     
-    componentDidMount() {
-        this.handleUpdateClick();
-    }
+    // componentDidMount() {
+    //     const api_weather = getUrlWeatherByCity(this.state.city);
+    //     fetch(api_weather).then(resolve => {
+    //         return resolve.json();
+    //     }).then(data => {
+    //         // console.log( 'DATA API',data)
+    //         const newWeather = transformWeather(data);
+    //         // console.log("APII",newWeather);
 
-    componentDidUpdate(prevProps, prevState) {
-        
-    }
-    
-    
-
-    handleUpdateClick = () => {
-        const api_weather = getUrlWeatherByCity(this.state.city);
-        fetch(api_weather).then(resolve => {
-            return resolve.json();
-        }).then(data => {
-            // console.log( 'DATA API',data)
-            const newWeather = transformWeather(data);
-            // console.log("APII",newWeather);
-
-            //Actualiza el state
-            this.setState({
-                data: newWeather
-            })
+    //         //Actualiza el state
+    //         this.setState({
+    //             data: newWeather
+    //         })
             
-        })
-        
-    }
+    //     })
+    // }
 
-    render(){
-        const {onWeatherLocationClick} = this.props;
-        const {city, data} = this.state;
-        return(
             <div className="weatherLocCont" onClick={onWeatherLocationClick}>
                 <Location city={city} ></Location>
                 {
                    data ? <WeatherData data={data}></WeatherData> :
                    <CircularProgress size={50}/>
                 }
-            </div>)
-        }
-};
+            </div>
+
+);
 
 weatherLocation.propTypes = {
     city: PropTypes.string.isRequired,
     onWeatherLocationClick: PropTypes.func,
+    data: PropTypes.shape({
+        temperature: PropTypes.number.isRequired,
+        weatherState: PropTypes.string.isRequired,
+        humidity: PropTypes.number.isRequired,
+        wind: PropTypes.string.isRequired,
+    }),
 }
 
 export default weatherLocation;
