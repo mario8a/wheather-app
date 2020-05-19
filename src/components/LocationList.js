@@ -15,13 +15,14 @@ const LocationList = ({cities, onSelectedLocation}) => {
     // console.log(cities);
     // handleWeatherLocationClick va poseer el dato de la ciudad
     const strToComponents = cities => (
-        cities.map(city => 
+        cities.map(city =>
+        (
             <WeatherLocation 
                 key={city.key} 
                 city={city.name} 
                 onWeatherLocationClick={() => handleWeatherLocationClick(city.name)}
-                dataa={city.data} />
-            )
+                data={city.data} />
+            ))
     );
 
     return (

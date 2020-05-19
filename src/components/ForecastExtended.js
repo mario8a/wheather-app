@@ -7,13 +7,13 @@ import ForecastItem from './ForecastItem';
 
 import './style.css';
 
-const api_key = "c18ae6a1a610902cfcefe27a257c770c";
-const url = 'http://api.openweathermap.org/data/2.5/forecast'
+// const api_key = "c18ae6a1a610902cfcefe27a257c770c";
+// const url = 'http://api.openweathermap.org/data/2.5/forecast'
 
 const renderForecastItemDays = (forecastData) => {
     return forecastData.map( forecast => (
         <ForecastItem 
-           
+            key={`${forecast.weekDay}${forecast.hour}`}
             weekDay={forecast.weekDay} 
             hour={forecast.hour} 
             data={forecast.data}>

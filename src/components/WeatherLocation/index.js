@@ -17,32 +17,6 @@ import './styles.css';
 
 const weatherLocation =  ({onWeatherLocationClick, city, data}) => ( 
 
-    // constructor(props) {
-    //     super(props);
-    //     const {city} = props;
-    //     this.state = {
-    //         // Este es el estado local del componente que ayudara a que el estado se renderize
-    //         city,
-    //         data: null
-    //     };
-    // }
-    
-    // componentDidMount() {
-    //     const api_weather = getUrlWeatherByCity(this.state.city);
-    //     fetch(api_weather).then(resolve => {
-    //         return resolve.json();
-    //     }).then(data => {
-    //         // console.log( 'DATA API',data)
-    //         const newWeather = transformWeather(data);
-    //         // console.log("APII",newWeather);
-
-    //         //Actualiza el state
-    //         this.setState({
-    //             data: newWeather
-    //         })
-            
-    //     })
-    // }
 
             <div className="weatherLocCont" onClick={onWeatherLocationClick}>
                 <Location city={city} ></Location>

@@ -11,7 +11,7 @@ class ForecastExtendedContainer extends Component {
         const {city, forecastData} = this.props;
         return (
             city && 
-            <ForecastExtended city={city} forecastData = {forecastData} />
+            <ForecastExtended city={city} forecastData={forecastData} />
         );
     }
 }
@@ -20,6 +20,7 @@ ForecastExtendedContainer.propTypes = {
     city: PropTypes.string.isRequired,
     forecastData: PropTypes.array,
 };
-const mapStateToProps = state => ({city: getCity(state) , forecastData: getForecastDataFromCities(state) });
 
-export default connect(mapStateToProps, null )(ForecastExtendedContainer);
+const mapStateToProps = state => ({ city: getCity(state), forecastData: getForecastDataFromCities(state) });
+
+export default connect(mapStateToProps, null)(ForecastExtendedContainer);

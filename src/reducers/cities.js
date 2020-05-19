@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
+import toPairs from 'lodash.topairs';
 import {SET_FORECAST_DATA, GET_WEATHER_CITY, SET_WEATHER_CITY} from '../actions';
 
-import toPairs from 'lodash.topairs';
 
 export const cities = (state = {}, action) => {
     switch (action.type) {
@@ -16,7 +16,7 @@ export const cities = (state = {}, action) => {
         }
         case SET_WEATHER_CITY:{
             const {city, weather} = action.payload;
-            return {...state, [city]: {...state[city],weather}}
+            return {...state, [city]: {...state[city], weather}}
         }
         default:
             return state;
