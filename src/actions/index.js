@@ -1,7 +1,7 @@
 import transformForecast from "../services/transformForecast";
 
 import transformWeather from '../services/transformWeather';
-// import getUrlWeatherByCity from '../services/getUrlWeatherByCity';
+import getUrlWeatherByCity from '../services/getUrlWeatherByCity';
 
 export const SET_CITY = 'SET_CITY';
 export const SET_FORECAST_DATA = 'SET_FORECAST_DATA';
@@ -17,7 +17,7 @@ const setWeatherCity = payload => ({type: SET_WEATHER_CITY, payload });
 
 const api_key = "c18ae6a1a610902cfcefe27a257c770c";
 const url = 'http://api.openweathermap.org/data/2.5/forecast';
-const url_weather = "http://api.openweathermap.org/data/2.5/weather";
+// const url_weather = "http://api.openweathermap.org/data/2.5/weather";
 
 export const setSelectedCity = payload => {
     return dispatch => {
@@ -45,37 +45,28 @@ export const setSelectedCity = payload => {
 
 export const setWeather = payload => {
 
-    // return dispatch => { 
+    return (dispatch, getState) => { 
 
-    //     payload.forEach((city) => {
+        payload.forEach((city) => {
 
-    //         const api_weather = getUrlWeatherByCity(city);
-    //         dispatch(getWeatherCity(city));
-            
-    //         fetch(api_weather).then(
-    //             data => (data.json())  
-    //         ).then( weather_data => {
-    //             const weather = transformWeather(weather_data);
-    //             dispatch(setWeatherCity({city: city, weather: weather}));
-    //         });
-    //     });
-    // };
+            const state = getState();
+            const date = state.cities[payload] && state.cities[payload].forecastDataDate;
 
-    return dispatch => {
-        payload.forEach(city => {
-            
+            const now = new Date();
+
+            if (date && (now - date) < 1 * 60 * 1000) {
+                return; 
+            }
+
+            const api_weather = getUrlWeatherByCity(city);
             dispatch(getWeatherCity(city));
-
-            const api_weather = `${url_weather}?q=${city}&appid=${api_key}`;
-            fetch(api_weather).then( data => {
-                return data.json();
-            }).then( weather_data => {
+            
+            fetch(api_weather).then(
+                data => (data.json())  
+            ).then( weather_data => {
                 const weather = transformWeather(weather_data);
-                
-                dispatch(setWeatherCity({city, weather}));
+                dispatch(setWeatherCity({city: city, weather: weather}));
             });
         });
-    }
-
-    
+    };    
 };
